@@ -1,0 +1,39 @@
+body {
+  font-family: var(--font-family-base);
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+a,
+button,
+label,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: inherit;
+
+  @include hover {
+    color: var(--color-black);
+  }
+
+  // Подчеркивание ссылок остается для ссылок в тексте, но не для ссылок в остальном макете
+  &[class] {
+    text-decoration: none;
+  }
+}
+
