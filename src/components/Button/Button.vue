@@ -127,7 +127,6 @@ const componentAttrs = computed(() => ({
   cursor: pointer;
 
   @include hover {
-    color: var(--color-white);
     background-color: transparent;
   }
 
@@ -149,7 +148,6 @@ const componentAttrs = computed(() => ({
 
   &--transparent {
     background-color: transparent;
-    border-color: var(--color-accent);
 
     @include hover {
       background-color: var(--color-accent);
@@ -157,15 +155,7 @@ const componentAttrs = computed(() => ({
 
     &:has(.button__icon:only-child) {
       @include square(44px);
-
-      .button__icon {
-        --iconSize: #{fluid-to-laptop(34, 24)};
-      }
     }
-  }
-
-  &--transparent {
-    border: var(--border);
   }
 }
 </style>

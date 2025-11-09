@@ -40,7 +40,6 @@ const titleId = 'hero-title'
 
 <style scoped lang="scss">
 .hero {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,7 +54,9 @@ const titleId = 'hero-title'
   }
 
   &__body {
-    width: 760px;
+    @include mobile-above {
+      max-width: 760px;
+    }
 
     &-inner {
       display: grid;
@@ -70,7 +71,12 @@ const titleId = 'hero-title'
   &__actions {
     display: flex;
     justify-content: center;
-    column-gap: 30px;
+    align-items: center;
+    gap: 30px;
+
+    @include mobile-s {
+      flex-direction: column;
+    }
   }
 
   &__mouse {

@@ -3,6 +3,8 @@ html {
 }
 
 body {
+  @include fluid-text(16, 14);
+
   font-family: var(--font-family-base);
   color: var(--color-white);
   background-color: var(--color-black);
@@ -39,5 +41,11 @@ a {
   &[class] {
     text-decoration: none;
   }
+}
+
+.header,
+.content > *:not(:nth-last-child(1)),
+.footer {
+  //display: none !important;
 }
 
