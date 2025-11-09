@@ -1,8 +1,10 @@
-<script setup></script>
+<script setup>
+import Hero from '@/sections/Hero'
+</script>
 
 <template>
   <main class="content">
-    main
+    <Hero />
   </main>
 </template>
 
