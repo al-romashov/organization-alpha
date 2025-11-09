@@ -2,6 +2,14 @@
   --color-white: #FFFFFF;
   --color-black: #000000;
 
+  --color-accent: #1A4A8D;
+
+  --color-dark: #343A40;
+
+  --border: var(--border-width) solid var(--color-accent);
+
+  --border-width: 1px;
+
   --font-family-base: 'Manrope', sans-serif;
 
   --container-width: #{fluid-to-laptop(
