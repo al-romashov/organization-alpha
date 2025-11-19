@@ -13,7 +13,7 @@ const titleId = 'hero-title'
     <div class="hero__body">
       <div class="hero__body-inner container">
         <h1 class="hero__title" :id=titleId>
-          Профессиональное образование и повышение квалификации
+          Общество с ограниченной ответственностью «Альфа»
         </h1>
         <div class="hero__description">
           <p>Лицензированная образовательная деятельность с 2005 года. Более 15 000 выпускников.</p>
@@ -21,13 +21,8 @@ const titleId = 'hero-title'
         <div class="hero__actions">
           <Button
             class="hero__button button"
-            href="#"
-            label="Записаться"
-          />
-          <Button
-            class="hero__button button button--transparent"
-            href="#"
-            label="Узнать больше"
+            href="#contacts"
+            label="Основные сведения"
           />
         </div>
         <div class="hero__mouse">
