@@ -1,5 +1,9 @@
 html {
   scrollbar-gutter: auto;
+
+  &.is-lock {
+    overflow: hidden;
+  }
 }
 
 body {
@@ -7,7 +11,7 @@ body {
 
   font-family: var(--font-family-base);
   color: var(--color-white);
-  background-color: var(--color-black);
+  background-color: var(--color-iron-dark);
 }
 
 #app {
@@ -18,6 +22,26 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+h1, .h1 {
+  @include fluid-text(32, 28);
+  font-weight: 700;
+}
+
+h2, .h2 {
+  @include fluid-text(24, 20);
+  font-weight: 700;
+}
+
+h3, .h3 {
+  @include fluid-text(20, 18);
+  font-weight: 700;
+}
+
+h4, .h4 {
+  @include fluid-text(18, 16);
+  font-weight: 700;
 }
 
 a,

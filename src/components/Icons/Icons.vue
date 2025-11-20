@@ -26,11 +26,6 @@ const iconSrc = computed(() => {
     return match[1];
   }
 
-  console.warn(
-    `[Icons] Icon "${props.name}" was not found. Available icons:`,
-    entries.map(([path]) => path.replace('../../assets/icons/', '')),
-  );
-
   return '';
 });
 

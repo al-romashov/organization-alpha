@@ -16,13 +16,13 @@ const titleId = 'hero-title'
           Общество с ограниченной ответственностью «Альфа»
         </h1>
         <div class="hero__description">
-          <p>Лицензированная образовательная деятельность с 2005 года. Более 15 000 выпускников.</p>
+          <p>Лицензированная образовательная деятельность с <time datetime="2018-03">марта 2018 года</time></p>
         </div>
         <div class="hero__actions">
           <Button
             class="hero__button button"
             href="#contacts"
-            label="Основные сведения"
+            label="Контактные данные"
           />
         </div>
         <div class="hero__mouse">
@@ -43,10 +43,6 @@ const titleId = 'hero-title'
   min-height: 100vh;
   padding-bottom: var(--section-padding-y);
   background: url('@/assets/images/hero/bg.jpg') 50%/cover;
-
-  & .button {
-    width: 170px;
-  }
 
   &__body {
     @include mobile-above {

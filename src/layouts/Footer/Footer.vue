@@ -16,13 +16,17 @@
 <style scoped lang="scss">
 .footer {
   background-color: var(--color-dark);
+
+  &__inner {
+    border-top: var(--border-gray);
+  }
+
   &__extra {
     display: flex;
     justify-content: center;
     align-items: center;
     column-gap: 16px;
-    padding-top: 25px;
-    padding-bottom: fluid(40, 25);
+    padding-block: fluid(30, 15);
 
     @include mobile {
       flex-direction: column;

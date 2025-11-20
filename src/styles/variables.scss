@@ -5,10 +5,13 @@
   --color-accent: #1A4A8D;
 
   --color-dark: #343A40;
+  --color-iron-dark: #434B4D;
+  --color-iron-dark-hover: rgba(255, 255, 255, 0.05);
 
   --color-gray: #CCCCCC;
 
   --border: var(--border-width) solid var(--color-accent);
+  --border-gray: var(--border-width) solid var(--color-gray);
 
   --border-width: 1px;
 

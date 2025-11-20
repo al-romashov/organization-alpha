@@ -1,27 +1,38 @@
 <script setup>
+import { ref } from 'vue'
+import ImageModal from '@/components/ImageModal'
+
 const props = defineProps({
   images: {
     type: Array,
     default: () => []
   }
 })
+
+const selectedImage = ref(null)
+const isModalOpen = ref(false)
+
+const openImageModal = (image) => {
+  selectedImage.value = image
+  isModalOpen.value = true
+}
 </script>
 
 <template>
   <div class="special-block-content">
     <div class="special-block-content__text">
-      <h3>1. Руководитель:</h3>
+      <h4>1. Руководитель:</h4>
       <p>Ромашова Мария Алексеевна, директор, 8-913-980-38-19, uc@alfa54.com</p>
-      <h3>2. Состав педагогических работников:</h3>
+      <h4>2. Состав педагогических работников:</h4>
       <p>Шубин Юрий Викторович, преподаватель, образование высшее, стаж работы более 30 лет.</p>
       <p>Двуреченский Вадим Геннадьевич, преподаватель, образование высшее, стаж работы более 20 лет.</p>
       <p>Благодатнова Анастасия Геннадьевна. образование высшее, стаж работы более 10 лет.</p>
     </div>
-    
+
     <div v-if="images.length > 0" class="special-block-content__images-wrapper">
-      <h2 class="special-block-content__images-title">
+      <h3 class="special-block-content__images-title">
         Изображения
-      </h2>
+      </h3>
       <div class="special-block-content__images">
         <img
           v-for="(image, index) in images"
@@ -29,82 +40,18 @@ const props = defineProps({
           :src="image.src"
           :alt="image.alt"
           class="special-block-content__image"
+          @click="openImageModal(image)"
         />
       </div>
     </div>
+    <ImageModal
+      v-model="isModalOpen"
+      :image-src="selectedImage?.src"
+      :image-alt="selectedImage?.alt"
+    />
   </div>
 </template>
 
 <style scoped lang="scss">
-.special-block-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  &__text {
-    @include fluid-text(16, 14);
-    line-height: 1.6;
-    color: var(--color-white);
-
-    :deep(p) {
-      margin: 0 0 15px 0;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    :deep(h3) {
-      @include fluid-text(24, 20);
-      font-weight: 600;
-      margin: 25px 0 12px 0;
-      color: var(--color-white);
-
-      &:first-child {
-        margin-top: 0;
-      }
-    }
-
-    :deep(strong) {
-      font-weight: 700;
-    }
-  }
-
-  &__images-wrapper {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    @include mobile {
-      margin-top: 30px;
-      gap: 15px;
-    }
-  }
-
-  &__images-title {
-    @include fluid-text(24, 20);
-    font-weight: 600;
-    color: var(--color-white);
-    margin: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  &__images {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__image {
-    max-width: 720px;
-    width: 100%;
-    height: auto;
-    border-radius: var(--border-radius);
-    object-fit: cover;
-  }
-}
+@use '../SpecialBlockContent.scss' as *;
 </style>

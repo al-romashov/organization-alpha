@@ -1,10 +1,21 @@
 <script setup>
+import { ref } from 'vue'
+import ImageModal from '@/components/ImageModal'
+
 const props = defineProps({
   images: {
     type: Array,
     default: () => []
   }
 })
+
+const selectedImage = ref(null)
+const isModalOpen = ref(false)
+
+const openImageModal = (image) => {
+  selectedImage.value = image
+  isModalOpen.value = true
+}
 </script>
 
 <template>
@@ -16,31 +27,17 @@ const props = defineProps({
         :src="image.src"
         :alt="image.alt"
         class="special-block-content__image"
+        @click="openImageModal(image)"
       />
     </div>
+    <ImageModal
+      v-model="isModalOpen"
+      :image-src="selectedImage?.src"
+      :image-alt="selectedImage?.alt"
+    />
   </div>
 </template>
 
 <style scoped lang="scss">
-.special-block-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  &__images {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__image {
-    max-width: 720px;
-    width: 100%;
-    height: auto;
-    border-radius: var(--border-radius);
-    object-fit: cover;
-  }
-}
+@use '../SpecialBlockContent.scss' as *;
 </style>

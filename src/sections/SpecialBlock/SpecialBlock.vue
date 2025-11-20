@@ -54,7 +54,6 @@ const images = ref([])
 const isLoading = ref(false)
 const expandedSections = ref(new Set())
 
-// Предзагружаем все изображения
 const imageModules = import.meta.glob('@/specialBlock/**/*.{jpg,jpeg,png,gif,webp}', {
   eager: false
 })
@@ -76,7 +75,7 @@ const loadContent = async (section, subsection = null) => {
 
   try {
     const basePath = getSectionPath(section, subsection)
-    
+
     // Загружаем изображения для этого раздела
     const imageFiles = []
     const imageTargetPath = basePath.replace(/^specialBlock\//, '').replace(/\/$/, '')
@@ -88,7 +87,7 @@ const loadContent = async (section, subsection = null) => {
         .replace(/^src\/specialBlock\//, '')
       return normalizedKey === imageTargetPath && /\.(jpg|jpeg|png|gif|webp)$/i.test(key)
     })
-    
+
     // Сортируем изображения по имени файла (числовое значение)
     imageKeys.sort((a, b) => {
       const fileNameA = a.split('/').pop() || ''
@@ -100,7 +99,7 @@ const loadContent = async (section, subsection = null) => {
       }
       return fileNameA.localeCompare(fileNameB)
     })
-    
+
     for (const imageKey of imageKeys) {
       try {
         const imageModule = await imageModules[imageKey]()
@@ -114,12 +113,25 @@ const loadContent = async (section, subsection = null) => {
         console.error('Error loading image:', e)
       }
     }
-    
+
     images.value = imageFiles
   } catch (error) {
     console.error('Error loading content:', error)
   } finally {
     isLoading.value = false
+  }
+}
+
+const scrollToPersonalBlock = () => {
+  const personalBlockElement = document.querySelector('#personal-block')
+  if (personalBlockElement) {
+    const elementPosition = personalBlockElement.getBoundingClientRect().top + window.pageYOffset
+    const offsetPosition = elementPosition - 50
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    })
   }
 }
 
@@ -138,6 +150,7 @@ const toggleSection = (sectionId, event) => {
   } else {
     // Если подразделов нет, просто выбираем раздел
     selectSection(sectionId)
+    scrollToPersonalBlock()
   }
 }
 
@@ -153,16 +166,17 @@ const selectSection = (sectionId) => {
 const selectSubsection = (sectionId, subsectionId) => {
   activeSection.value = sectionId
   activeSubsection.value = subsectionId
-  
+
   // Автоматически раскрываем родительский раздел
   if (!expandedSections.value.has(sectionId)) {
     expandedSections.value.add(sectionId)
   }
-  
+
   const section = sections.find(s => s.id === sectionId)
   const subsection = section?.subsections?.find(s => s.id === subsectionId)
   if (section && subsection) {
     loadContent(section, subsection)
+    scrollToPersonalBlock()
   }
 }
 
@@ -193,33 +207,37 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="special-block">
+  <section class="special-block" id="personal-block">
     <div class="special-block__container container">
-      <div class="special-block__content">
-        <div v-if="isLoading" class="special-block__loading">
-          Загрузка...
-        </div>
-        <template v-else>
-          <header class="special-block__header">
-            <h1 class="special-block__title">
-              {{ currentSection?.name }}
-              <span v-if="activeSubsection" class="special-block__subtitle">
-                - {{ currentSection?.subsections?.find(s => s.id === activeSubsection)?.name }}
-              </span>
-            </h1>
-          </header>
-          
-          <div class="special-block__main">
-            <component
-              :is="currentComponent"
-              v-if="currentComponent"
-              :images="images"
-            />
+      <header class="special-block__header">
+        <h2 class="special-block__title">Специальный раздел</h2>
+      </header>
+      <div class="special-block__body">
+        <div class="special-block__content">
+          <div v-if="isLoading" class="special-block__loading">
+            Загрузка...
           </div>
-        </template>
-      </div>
-      
-      <aside class="special-block__aside">
+          <template v-else>
+            <div class="special-block__section-header">
+              <h3 class="special-block__section-title">
+                {{ currentSection?.name }}
+                <span v-if="activeSubsection" class="special-block__subtitle">
+                  - {{ currentSection?.subsections?.find(s => s.id === activeSubsection)?.name }}
+                </span>
+              </h3>
+            </div>
+
+            <div class="special-block__main">
+              <component
+                :is="currentComponent"
+                v-if="currentComponent"
+                :images="images"
+              />
+            </div>
+          </template>
+        </div>
+
+        <aside class="special-block__aside">
         <nav class="special-block__nav">
           <ul class="special-block__nav-list">
             <li
@@ -230,7 +248,7 @@ onMounted(() => {
               <button
                 :class="[
                   'special-block__nav-link',
-                  { 
+                  {
                     'special-block__nav-link--active': activeSection === section.id && !activeSubsection,
                     'special-block__nav-link--expandable': section.hasSubsections,
                     'special-block__nav-link--expanded': isSectionExpanded(section.id)
@@ -239,14 +257,14 @@ onMounted(() => {
                 @click="toggleSection(section.id, $event)"
               >
                 <span class="special-block__nav-link-text">{{ section.name }}</span>
-                <span 
-                  v-if="section.hasSubsections" 
+                <span
+                  v-if="section.hasSubsections"
                   class="special-block__nav-link-arrow"
                 >
                   ›
                 </span>
               </button>
-              
+
               <ul
                 v-if="section.hasSubsections && section.subsections && isSectionExpanded(section.id)"
                 class="special-block__nav-sublist"
@@ -271,23 +289,32 @@ onMounted(() => {
           </ul>
         </nav>
       </aside>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
 .special-block {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
   padding: var(--section-padding-y) 0;
 
   &__container {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: fluid(50, 30);
+  }
 
-    @include tablet {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
+  &__header {
+    text-align: center;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: fluid(200, 140) 1fr;
+    gap: fluid(40, 10);
   }
 
   &__content {
@@ -296,20 +323,14 @@ onMounted(() => {
 
   &__loading {
     @include flex-center;
+
     min-height: 400px;
     font-size: 18px;
     color: var(--color-gray);
   }
 
   &__header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-    @include mobile {
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-    }
   }
 
   &__main {
@@ -318,11 +339,23 @@ onMounted(() => {
     gap: 30px;
   }
 
-  &__title {
-    @include fluid-text(32, 24);
-    font-weight: 700;
-    color: var(--color-white);
-    margin: 0;
+  &__section {
+    &-header {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: var(--border-gray);
+
+      @include mobile {
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+      }
+    }
+
+    &-title {
+      font-weight: 700;
+      color: var(--color-white);
+      margin: 0;
+    }
   }
 
   &__subtitle {
@@ -331,14 +364,12 @@ onMounted(() => {
   }
 
   &__aside {
-    @include tablet {
-      order: -1;
-    }
+    order: -1;
   }
 
   &__nav {
     position: sticky;
-    top: 20px;
+    top: calc(var(--header-height, 60px) + 20px);
   }
 
   &__nav-list {
@@ -361,28 +392,25 @@ onMounted(() => {
     text-align: left;
     background: transparent;
     border: none;
-    border-left: 3px solid transparent;
+    border-radius: var(--border-radius);
     color: var(--color-white);
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: all var(--transition-duration);
-    border-radius: 4px;
+    transition-duration: var(--transition-duration);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
 
     @include hover {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: var(--color-accent);
+      background-color: var(--color-iron-dark-hover);
     }
 
     &--active {
-      border-left-color: var(--color-accent);
-      background-color: rgba(26, 74, 141, 0.1);
-      color: var(--color-accent);
+      background-color: var(--color-accent);
       font-weight: 600;
+      pointer-events: none;
     }
 
     &--expandable {
@@ -429,13 +457,11 @@ onMounted(() => {
     text-align: left;
     background: transparent;
     border: none;
-    border-left: 3px solid transparent;
+    border-radius: var(--border-radius);
     color: var(--color-gray);
     font-size: 14px;
-    font-weight: 400;
     cursor: pointer;
-    transition: all var(--transition-duration);
-    border-radius: 4px;
+    transition-duration:var(--transition-duration);
 
     @include hover {
       background-color: rgba(255, 255, 255, 0.03);
@@ -443,10 +469,9 @@ onMounted(() => {
     }
 
     &--active {
-      border-left-color: var(--color-accent);
-      background-color: rgba(26, 74, 141, 0.1);
-      color: var(--color-accent);
-      font-weight: 500;
+      background-color: var(--color-accent);
+      font-weight: 600;
+      pointer-events: none;
     }
   }
 }

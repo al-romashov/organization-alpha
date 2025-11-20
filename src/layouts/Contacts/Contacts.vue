@@ -69,9 +69,8 @@ import Icons from '@/components/Icons';
 
 <style scoped lang="scss">
 .contacts {
+  padding-block: var(--section-padding-y);
   background-color: var(--color-dark);
-  padding-top: var(--section-padding-y);
-  padding-bottom: var(--section-padding-y);
 
   &__content {
     display: grid;
@@ -92,7 +91,7 @@ import Icons from '@/components/Icons';
 
   &__item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     column-gap: fluid(20, 16);
   }
 
@@ -118,6 +117,13 @@ import Icons from '@/components/Icons';
     font-size: 1rem;
     margin: 0;
     color: var(--color-gray);
+  }
+
+  // Hover эффект для ссылок с классом contacts__text
+  a#{&}__text {
+    @include hover {
+      color: var(--color-white);
+    }
   }
 
   &__map {
