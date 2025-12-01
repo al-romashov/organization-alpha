@@ -470,6 +470,7 @@ onMounted(() => {
 
     &--active {
       background-color: var(--color-accent);
+      color: var(--color-white);
       font-weight: 600;
       pointer-events: none;
     }

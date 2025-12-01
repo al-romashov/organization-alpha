@@ -15,7 +15,7 @@
 
 <style scoped lang="scss">
 .footer {
-  background-color: var(--color-dark);
+  background-color: var(--color-accent);
 
   &__inner {
     border-top: var(--border-gray);

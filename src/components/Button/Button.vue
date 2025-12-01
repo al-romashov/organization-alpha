@@ -157,5 +157,16 @@ const componentAttrs = computed(() => ({
       @include square(44px);
     }
   }
+
+  &--white {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-color: var(--color-white);
+
+    @include hover {
+      background-color: var(--color-white);
+      color: var(--color-accent);
+    }
+  }
 }
 </style>

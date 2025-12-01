@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import BurgerButton from '@/components/BurgerButton'
+import Button from '@/components/Button'
 import Logo from '@/components/Logo'
 import OverlayMenu from '@/modules/OverlayMenu'
 
@@ -50,12 +51,11 @@ onUnmounted(() => {
         <nav class="header__menu">
           <ul class="header__menu-list">
             <li class="header__menu-item">
-              <a
-                class="header__menu-link"
+              <Button
+                class="header__menu-link button--white"
                 href="#personal-block"
-              >
-                Специальный раздел
-              </a>
+                label="Специальный раздел"
+              />
             </li>
           </ul>
         </nav>
@@ -69,8 +69,6 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .header {
-  --header-menu-link-color: var(--color-white);
-
   position: sticky;
   z-index: 100;
   top: 0;
@@ -82,7 +80,7 @@ onUnmounted(() => {
   animation-range: 0 120px;
 
   @mixin scrolling-header-styles {
-    background-color: var(--color-dark);
+    background-color: var(--color-accent);
   }
 
   @keyframes scrolling-header {
@@ -165,15 +163,7 @@ onUnmounted(() => {
     }
 
     &-link {
-      padding: fluid-to-laptop(14, 12) fluid-to-laptop(24, 20);
-      color: var(--header-menu-link-color);
-      border: 1px solid var(--color-white);
-      border-radius: var(--border-radius);
-      background-color: var(--color-dark);
-
-      @include hover {
-        background-color: var(--color-iron-dark);
-      }
+     padding: fluid-to-laptop(14, 12) fluid-to-laptop(24, 20);
     }
   }
 

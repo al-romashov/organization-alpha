@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import Icons from '@/components/Icons'
 
 const isVisible = ref(false)
 
@@ -34,11 +33,15 @@ onUnmounted(() => {
     title="Наверх"
     @click="scrollToTop"
   >
-    <Icons
-      class="scroll-to-top__icon"
-      name="arrow-up"
-      label="Наверх"
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 19V5M5 12L12 5L19 12"
+      stroke="#343A40"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
+  </svg>
   </button>
 </template>
 
@@ -52,10 +55,13 @@ onUnmounted(() => {
   bottom: 20px;
   z-index: 99;
   padding: 0;
-  background-color: var(--color-accent);
+  background-color: var(--color-white);
   border: var(--border);
+  border-color: var(--color-white);
   border-radius: 50%;
-  color: var(--color-white);
+  box-shadow: 0 2px 8px var(--color-black);
+  color: var(--color-black);
+  fill: var(--color-black);
   cursor: pointer;
   transition-duration: var(--transition-duration);
   opacity: 0;
@@ -68,8 +74,21 @@ onUnmounted(() => {
     transform: translateY(0);
   }
 
+
+  svg {
+    path {
+      stroke: var(--color-black);
+    }
+  }
+
   @include hover {
-    background-color: transparent;
+    background-color: var(--color-accent);
+
+    svg {
+      path {
+        stroke: var(--color-white);
+      }
+    }
   }
 
   &__icon {

@@ -70,7 +70,7 @@ import Icons from '@/components/Icons';
 <style scoped lang="scss">
 .contacts {
   padding-block: var(--section-padding-y);
-  background-color: var(--color-dark);
+  background-color: var(--color-accent);
 
   &__content {
     display: grid;
@@ -116,13 +116,12 @@ import Icons from '@/components/Icons';
   &__text {
     font-size: 1rem;
     margin: 0;
-    color: var(--color-gray);
   }
 
   // Hover эффект для ссылок с классом contacts__text
   a#{&}__text {
     @include hover {
-      color: var(--color-white);
+      color: var(--color-gray);
     }
   }
 
