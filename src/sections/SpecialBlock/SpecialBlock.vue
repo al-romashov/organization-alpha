@@ -5,6 +5,9 @@ import StructureContent from '@/components/SpecialBlock/StructureContent'
 import EducationContent from '@/components/SpecialBlock/EducationContent'
 import ManagementContent from '@/components/SpecialBlock/ManagementContent'
 import DocumentsContent from '@/components/SpecialBlock/DocumentsContent'
+import { useSpecialClass } from '@/modules/SpecialClassObserver'
+
+const { hasSpecialClass } = useSpecialClass()
 
 const sections = [
   {
@@ -212,7 +215,10 @@ onMounted(() => {
       <header class="special-block__header">
         <h2 class="special-block__title">Специальный раздел</h2>
       </header>
-      <div class="special-block__body">
+      <div
+        class="special-block__body"
+        :class="{ 'special-block__body--a11y': hasSpecialClass }"
+      >
         <div class="special-block__content">
           <div v-if="isLoading" class="special-block__loading">
             Загрузка...
@@ -315,6 +321,10 @@ onMounted(() => {
     display: grid;
     grid-template-columns: fluid(200, 140) 1fr;
     gap: fluid(40, 10);
+
+    &--a11y {
+      grid-template-columns: 270px 1fr;
+    }
   }
 
   &__content {
@@ -327,10 +337,6 @@ onMounted(() => {
     min-height: 400px;
     font-size: 18px;
     color: var(--color-gray);
-  }
-
-  &__header {
-
   }
 
   &__main {

@@ -4,9 +4,12 @@ import BurgerButton from '@/components/BurgerButton'
 import Button from '@/components/Button'
 import Logo from '@/components/Logo'
 import OverlayMenu from '@/modules/OverlayMenu'
+import { useSpecialClass } from '@/modules/SpecialClassObserver'
 
 let resizeObserver = null
 let overlayMenu = null
+
+const { hasSpecialClass } = useSpecialClass()
 
 const updateHeaderHeight = () => {
   const header = document.querySelector('.header')
@@ -41,7 +44,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header class="header is-fixed" data-js-overlay-menu>
+  <header 
+    class="header is-fixed" 
+    :class="{ 'header--a11y': hasSpecialClass }"
+    data-js-overlay-menu
+  >
     <div class="header__inner container">
       <Logo />
       <dialog
@@ -55,6 +62,16 @@ onUnmounted(() => {
                 class="header__menu-link button--white"
                 href="#personal-block"
                 label="Специальный раздел"
+                :extra-attrs="{ 'data-js-menu-link': '' }"
+              />
+            </li>
+            <li class="header__menu-item">
+              <Button
+                class="header__menu-link button--white"
+                href="#"
+                label="Версия для слабовидящих"
+                id="specialButton"
+                :extra-attrs="{ 'data-js-menu-link': '' }"
               />
             </li>
           </ul>
@@ -83,7 +100,7 @@ onUnmounted(() => {
     background-color: var(--color-accent);
   }
 
-  @keyframes scrolling-header {
+  @keyframes scrolling-header { 
     to {
       @include scrolling-header-styles;
     }
@@ -97,6 +114,11 @@ onUnmounted(() => {
 
   &.is-fixed {
     position: fixed;
+  }
+
+  &--a11y {
+    top: 55px;
+    border-bottom: 3px solid #808080;
   }
 
   &__inner {
@@ -120,10 +142,9 @@ onUnmounted(() => {
      transition-duration: var(--transition-duration);
      transition-behavior: allow-discrete;
 
-    // Временно закомментировано, т.к. количество ссылок в header слишком мало (< 3)
-    //@include tablet-above {
+    @include tablet-above {
       display: contents;
-    //}
+    }
 
      @mixin starting-styles {
        opacity: 0;
@@ -154,12 +175,11 @@ onUnmounted(() => {
       align-items: center;
       column-gap: 6px;
 
-      // Временное скрытие burger кнопки, тк количество ссылок в header слишком мало ( < 3 )
-      // @include tablet {
-      //   flex-direction: column;
-      //   row-gap: 16px;
-      //   margin-block: auto;
-      // }
+      @include tablet {
+        flex-direction: column;
+        row-gap: 16px;
+        margin-block: auto;
+      }
     }
 
     &-link {
@@ -169,9 +189,6 @@ onUnmounted(() => {
 
   &__burger-button {
     position: relative;
-
-    // Временное скрытие burger кнопки, тк количество ссылок в header слишком мало ( < 3 )
-    display: none !important;
   }
 }
 </style>

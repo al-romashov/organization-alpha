@@ -11,6 +11,14 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  id: {
+    type: String,
+    default: '',
+  },
+  title: {
+    type: String,
+    default: '',
+  },
 });
 
 const icons = import.meta.glob('../../assets/icons/**/*.svg', {
@@ -46,6 +54,8 @@ const isDecorative = computed(() => accessibleLabel.value.length === 0);
       :src="iconSrc"
       class="icon__image"
       :alt="accessibleLabel"
+      :id="props.id"
+      :title="props.title"
     />
   </span>
 </template>

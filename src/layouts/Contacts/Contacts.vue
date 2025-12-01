@@ -38,7 +38,7 @@ import Icons from '@/components/Icons';
             />
             <div class="contacts__info-content">
               <p class="contacts__label">Email</p>
-              <a href="mailto:info@example.com" class="contacts__text">uc@alfa54.com</a>
+              <a href="mailto:uc@alfa54.com" class="contacts__text">uc@alfa54.com</a>
             </div>
           </div>
           <div class="contacts__item">
