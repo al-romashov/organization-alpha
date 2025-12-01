@@ -1,7 +1,9 @@
 <script setup>
 import Button from '@/components/Button'
+import { useSpecialClass } from '@/modules/SpecialClassObserver'
 
 const titleId = 'hero-title'
+const { hasSpecialClass } = useSpecialClass()
 
 </script>
 
@@ -12,7 +14,11 @@ const titleId = 'hero-title'
   >
     <div class="hero__body">
       <div class="hero__body-inner container">
-        <h1 class="hero__title" :id=titleId>
+        <h1 
+          class="hero__title" 
+          :class="{ 'hero__title--a11y': hasSpecialClass }"
+          :id=titleId
+        >
           Общество с ограниченной ответственностью «Альфа»
         </h1>
         <div class="hero__description">
@@ -26,7 +32,10 @@ const titleId = 'hero-title'
           />
         </div>
         <div class="hero__mouse">
-          <div class="hero__mouse-scroll"></div>
+          <div 
+            class="hero__mouse-scroll"
+            :class="{ 'hero__mouse-scroll--a11y': hasSpecialClass }"
+          ></div>
         </div>
       </div>
     </div>
@@ -57,6 +66,10 @@ const titleId = 'hero-title'
 
   &__title {
     text-shadow: 2px 2px 4px var(--color-dark);
+
+    &--a11y {
+      text-shadow: none;
+    }
   }
 
   &__actions {
@@ -97,6 +110,10 @@ const titleId = 'hero-title'
         transform: translate(-50%);
         -webkit-animation: hero-mouse-wheel 1.6s infinite ease-in-out;
         animation: hero-mouse-wheel 1.6s infinite ease-in-out;
+      }
+
+      &--a11y {
+        display: none;
       }
     }
   }

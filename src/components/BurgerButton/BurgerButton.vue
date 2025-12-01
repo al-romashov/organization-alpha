@@ -29,17 +29,20 @@ const title = 'Open menu'
 
 <style scoped lang="scss">
 .burger-button {
+  --burger-button-color: var(--color-accent);
+
   @include flex-center(true);
   @include square(50px);
 
   padding: 0;
-  color: var(--header-menu-link-color);
   border: 1px solid var(--color-white);
   border-radius: var(--border-radius);
-  background-color: var(--color-dark);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 
   @include hover {
-    background-color: var(--color-iron-dark);
+    background-color: var(--color-white);
+    color: var(--color-accent);
   }
 
   &.is-active {
@@ -63,13 +66,14 @@ const title = 'Open menu'
 
   &__line {
     fill: none;
-    stroke: var(--color-white);
+    stroke: currentColor;
     stroke-width: 6;
     stroke-linecap: round;
     stroke-dasharray: 60 207;
     transition:
       stroke-dasharray var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
-      stroke-dashoffset var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+      stroke-dashoffset var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
+      stroke var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
 
     &--2 {
       stroke-dasharray: 60 60;

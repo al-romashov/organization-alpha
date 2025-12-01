@@ -82,7 +82,7 @@ const title = computed(() => (props.isLabelHidden ? props.label : undefined));
 const componentAttrs = computed(() => ({
   ...specificAttrs.value,
   ...props.extraAttrs,
-}));
+}))
 </script>
 
 <template>

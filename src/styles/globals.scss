@@ -4,6 +4,15 @@ html {
   &.is-lock {
     overflow: hidden;
   }
+
+  &.special {
+    --section-padding-y: 30px;
+
+    .hero,
+    .special-block {
+      border-bottom: var(--border-gray);
+    }
+  }
 }
 
 body {
@@ -65,6 +74,10 @@ a {
   &[class] {
     text-decoration: none;
   }
+}
+
+.avtor {
+  display: none;
 }
 
 .header,

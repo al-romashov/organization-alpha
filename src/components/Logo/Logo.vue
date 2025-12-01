@@ -1,7 +1,7 @@
 <script setup>
 import logoImgSrc from '@/assets/images/logo.svg'
 
-const title = 'Home'
+const title = 'Главная'
 const loading = 'lazy'
 
 </script>
